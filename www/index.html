@@ -28,14 +28,21 @@ C:\Users\Julia Ourique\repo\diario\node_modules\ngstorage
       <ion-view>
     <ion-content ng-controller="Diario">
         <div class="list">
-            <div class="item " ng-repeat="dia in dias" ng-click="addAtiv()">
+            <span ng-repeat="dia in dias">
+            <div class="item item-divider"  ng-click="addAtiv()">
                 {{dia.nome}} - {{dia.data}}
-               <div class="list">
-                   <div class="item" ng-repeat="ativ in dia.ativs" >
-                       {{ativ.txt}} - {{ativ.hora}}
+            </div>
+               <div class="list" show-delete="shouldShowDelete">
+                   <div class="row" ng-repeat="ativ in dia.ativs">
+                   <div class="col col-90 item"  ng-click="addAtiv(ativ, $index)" >
+                       {{ativ.txt}} - {{ativ.hora}}    
+                   </div>
+                   <div class="col">
+                        <button class=" ion-minus-circled" ng-click="dia.ativs.splice($index, 1)"></button>
                    </div>
                </div>
-            </div>
+               </div>
+            </span>
         </div>
         {{ativCurr}}{{minCurr}}
     </ion-content>    

@@ -11,6 +11,7 @@ angular.module('starter')
             $scope.dias = $localStorage[i];
         }
     }
+
     $scope.getFromPopup = {};
     $scope.getFromPopup.ativCurr = "";
     $scope.getFromPopup.minCurr = "";
@@ -55,39 +56,76 @@ angular.module('starter')
     var diaCurr = Dia();
     if($scope.dias[diaCurr.data] == undefined)
         $scope.dias[diaCurr.data] = diaCurr;
-    $scope.addAtiv = function(){
+    //$scope.dias[diaCurr.data].ativs = [];//RESET
+    $scope.addAtiv = function(ativ, index){
+        var isAtivDefined = ativ != undefined; 
+        var horas = [];
+        if(isAtivDefined){
+            var horas = ativ.hora.split(':') || "";
+            $scope.getFromPopup.ativCurr = ativ.txt;
+        }
+
         var dateTemp = new Date();
-        $scope.getFromPopup.hourCurr = dateTemp.getHours();
-        $scope.getFromPopup.minCurr = dateTemp.getMinutes();
+        $scope.getFromPopup.hourCurr = horas[0]*1 || dateTemp.getHours();
+        $scope.getFromPopup.minCurr = horas[1]*1 || dateTemp.getMinutes();
         
-        
+
      var template_= '<input type="text" ng-model="getFromPopup.ativCurr">' +
      '<div style="display: inline ! important">' +
-     'Hora <input type="number" ng-model="getFromPopup.hourCurr">' +
-     'Minuto <input type="number" ng-model="getFromPopup.minCurr">'+
+     '<input type="number" placeholder="Hora" ng-model="getFromPopup.hourCurr">' +
+     '<input type="number" placeholder="Minuto" ng-model="getFromPopup.minCurr">'+
      '</div>';    
      var popupAddAtiv = $ionicPopup.show({
          template: template_,
          scope: $scope,
          buttons: [// Array[Object] (optional). Buttons to place in the popup footer.
+         {
+            text: 'Cancelar',
+            type: 'button-stable',
+            onTap: function(e) {
+            // Returning a value will cause the promise to resolve with the given value         
+                return ;
+            }
+         },
    {
     text: 'OK',
     type: 'button-positive',
     onTap: function(e) {
       // Returning a value will cause the promise to resolve with the given value.
-      temp = {
-          txt: ''+$scope.getFromPopup.ativCurr + '',
-          hora: $scope.getFromPopup.hourCurr + ':'+ $scope.getFromPopup.minCurr
+      if(isAtivDefined) {
+            temp = {
+            txt: ''+$scope.getFromPopup.ativCurr + '',
+            hora: $scope.getFromPopup.hourCurr + ':'+ $scope.getFromPopup.minCurr
+            };
+            temp.id = ativ.id;
+      }
+      else{
+          var len  = $scope.getFromPopup.ativCurr;
+
+        temp = {
+            id:$scope.getFromPopup.ativCurr.slice(len-5,len), 
+            txt: ''+$scope.getFromPopup.ativCurr + '',
+            hora: $scope.getFromPopup.hourCurr + ':'+ $scope.getFromPopup.minCurr
         };
-        return temp;
+        }
+        return {temp:temp , edit: isAtivDefined, index: index};
     }
   }]
          
      });   
     popupAddAtiv.then(function(res){
-        $scope.dias[diaCurr.data].ativs.push(res);
+        if(res)
+            if(res.edit)
+                $scope.dias[diaCurr.data].ativs[res.index] = res.temp;
+            else{
+            $scope.dias[diaCurr.data].ativs.push(res.temp);
+            }
     
     });
+    }//FIM POPUP
+
+    function delAtiv(index){
+        $scope.dias[diaCurr.data].ativs.splice(index);
     }
 });//FIM CONTROLLER
 })();
