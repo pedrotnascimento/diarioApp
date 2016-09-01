@@ -1,6 +1,16 @@
 (function(){
 angular.module('starter')
-.controller('Diario', function($scope, $ionicPopup){
+.controller('Diario', function($scope, $ionicPopup, $localStorage){
+    var watchers = ['dias'];
+    for( var i_ in watchers){
+        var i = watchers[i_];
+        console.log(i + " "+ JSON.stringify($localStorage[i]));
+        if($localStorage[i] == undefined){
+            $localStorage[i]={};
+        }else{
+            $scope.dias = $localStorage[i];
+        }
+    }
     $scope.getFromPopup = {};
     $scope.getFromPopup.ativCurr = "";
     $scope.getFromPopup.minCurr = "";
@@ -43,9 +53,8 @@ angular.module('starter')
         return self;
     }
     var diaCurr = Dia();
-    
-    $scope.dias = {};
-    $scope.dias[diaCurr.data] = diaCurr;
+    if($scope.dias[diaCurr.data] == undefined)
+        $scope.dias[diaCurr.data] = diaCurr;
     $scope.addAtiv = function(){
         var dateTemp = new Date();
         $scope.getFromPopup.hourCurr = dateTemp.getHours();
