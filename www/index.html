@@ -17,7 +17,6 @@
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-C:\Users\Julia Ourique\repo\diario\node_modules\ngstorage
 
     <script src="lib/ngstorage/ngStorage.min.js"></script>
     <!-- your app's js -->
@@ -25,30 +24,7 @@ C:\Users\Julia Ourique\repo\diario\node_modules\ngstorage
     <script src="js/ctrl/diario.js"></script>
   </head>
   <body ng-app="starter">
-      <ion-view>
-    <ion-content ng-controller="Diario">
-        <div class="list">
-            <span ng-repeat="dia in dias">
-            <div class="item item-divider"  ng-click="addAtiv()">
-                {{dia.nome}} - {{dia.data}}
-            </div>
-               <div class="list" show-delete="shouldShowDelete">
-                   <div class="row" ng-repeat="ativ in dia.ativs">
-                   <div class="col col-90 item"  ng-click="addAtiv(ativ, $index)" >
-                       {{ativ.txt}}
-                        <i class="ion-play balanced" ng-show="ativ.horaIni"> {{' ' + ativ.horaIni}}</i>
-                        <i class="ion-stop assertive"  ng-show="ativ.horaFim">{{' ' + ativ.horaFim}}</i>  
-                   </div>
-                   <div class="col">
-                        <button class=" ion-minus-circled" ng-click="dia.ativs.splice($index, 1)"></button>
-                   </div>
-               </div>
-               </div>
-            </span>
-        </div>
-        {{ativCurr}}{{minCurr}}
-    </ion-content>    
-</ion-view>
+
           <ion-nav-view></ion-nav-view>
   </body>
 </html>

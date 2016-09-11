@@ -1,4 +1,4 @@
-(function(){
+
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -24,11 +24,13 @@ var app = angular.module('starter', ['ionic', 'ngStorage'])
   });
 });
 
-app.config(function($stateProvider){
+app.config(function($stateProvider, $urlRouterProvider){
     $stateProvider
     .state('diario', {
               url: '/diario',
-              templateUrl: 'index.html',
+              templateUrl: 'templates/diario.html',
+			  controller: 'Diario'
+			  
           }); 
+		     $urlRouterProvider.otherwise('/diario');
 });
-})();

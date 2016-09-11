@@ -1,6 +1,7 @@
 (function(){
 angular.module('starter')
 .controller('Diario', function($scope, $ionicPopup, $localStorage){
+	
     var watchers = ['dias'];
     for( var i_ in watchers){
         var i = watchers[i_];

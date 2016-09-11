@@ -1,0 +1,24 @@
+<ion-view>
+    <ion-content>
+        <div class="list">
+            <span ng-repeat="dia in dias">
+            <div class="item item-divider"  ng-click="addAtiv()">
+                {{dia.nome}} - {{dia.data}}
+            </div>
+               <div class="list" show-delete="shouldShowDelete">
+                   <div class="row" ng-repeat="ativ in dia.ativs">
+                   <div class="col col-90 item"  ng-click="addAtiv(ativ, $index)" >
+                       {{ativ.txt}}
+                        <i class="ion-play balanced" ng-show="ativ.horaIni"> {{' ' + ativ.horaIni}}</i>
+                        <i class="ion-stop assertive"  ng-show="ativ.horaFim">{{' ' + ativ.horaFim}}</i>  
+                   </div>
+                   <div class="col">
+                        <button class=" ion-minus-circled" ng-click="dia.ativs.splice($index, 1)"></button>
+                   </div>
+               </div>
+               </div>
+            </span>
+        </div>
+        {{ativCurr}}{{minCurr}}
+    </ion-content>    
+</ion-view>
